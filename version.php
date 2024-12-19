@@ -25,9 +25,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2024110102;       // The current plugin version (Date: YYYYMMDDXX).
-$plugin->requires  = 2024041600;       // Requires this Moodle version.
+$plugin->version   = 2024121900;       // The current plugin version (Date: YYYYMMDDXX).
+$plugin->requires  = 2024100100;       // Requires this Moodle version.
 $plugin->component = 'enrol_ilios';     // Full name of the plugin (used for diagnostics).
-$plugin->release = 'v4.4';
-$plugin->supported = [404, 404];
-$plugin->maturity = MATURITY_STABLE;
+$plugin->release = 'v4.5-beta';
+$plugin->supported = [405, 405];
+$plugin->maturity = MATURITY_BETA;
