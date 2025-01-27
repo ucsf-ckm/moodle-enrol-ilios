@@ -262,6 +262,7 @@ class enrol_ilios_edit_form extends moodleform {
         }
 
         $mform->addElement('select', 'roleid', get_string('assignrole', 'enrol_ilios'), $roles);
+        $mform->addHelpButton('roleid', 'assignrole', 'enrol_ilios');
         $mform->setDefault('roleid', $enrol->get_config('roleid'));
 
         $groups = [0 => get_string('none')];
@@ -270,6 +271,7 @@ class enrol_ilios_edit_form extends moodleform {
         }
 
         $mform->addElement('select', 'customint6', get_string('addgroup', 'enrol_ilios'), $groups);
+        $mform->addHelpButton('customint6', 'addgroup', 'enrol_ilios');
 
         $mform->addElement('hidden', 'courseid', null);
         $mform->setType('courseid', PARAM_INT);

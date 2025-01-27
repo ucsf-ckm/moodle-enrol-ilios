@@ -24,10 +24,12 @@
  */
 
 $string['addgroup'] = 'Add to group';
+$string['addgroup_help'] = 'If selected, then users are added to the specified user-group as part of their enrollment into this course.';
 $string['ajaxmore'] = 'More...';
 $string['apikey'] = 'Ilios API key';
 $string['apikey_desc'] = 'Enter the API key obtained from your Ilios server.';
 $string['assignrole'] = 'Assign role';
+$string['assignrole_help'] = 'If selected, then users are enrolled with the specified user-role into this course.';
 $string['cohort'] = 'Program year/Cohort (groups) (learners)';
 $string['cohort_help'] = 'This corresponds to the Cohorts in Ilios.';
 $string['cohortoptionsupdate'] = 'Update cohort options';
