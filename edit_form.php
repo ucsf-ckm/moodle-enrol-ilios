@@ -78,6 +78,7 @@ class enrol_ilios_edit_form extends moodleform {
         $options = [ENROL_INSTANCE_ENABLED  => get_string('yes'),
                          ENROL_INSTANCE_DISABLED => get_string('no')];
         $mform->addElement('select', 'status', get_string('status', 'enrol_ilios'), $options);
+        $mform->addHelpButton('status', 'status', 'enrol_ilios');
 
         $usertypes = [
             get_string('learner', 'enrol_ilios'),

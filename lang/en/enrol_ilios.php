@@ -76,5 +76,6 @@ $string['schooloptionsupdate'] = 'Update school options';
 $string['selectusertype'] = 'User type';
 $string['selectusertype_help'] = 'Select an Ilios user type to sync. Note that only the number of Ilios Learners is noted in the menus below.';
 $string['status'] = 'Active';
+$string['status_help'] = 'If set to "Yes", then this enrolment sync instance is active. To deactivate this sync, set this to "No".';
 $string['subgroup'] = 'Sub-group (sub-groups) (learners)';
 $string['subgroup_help'] = 'This corresponds to the Sub-groups in Ilios.';
