@@ -71,8 +71,8 @@ class enrol_ilios_edit_form extends moodleform {
         $enrol = $plugin;
 
         $mform->addElement('header', 'general', get_string('pluginname', 'enrol_ilios'));
-
         $mform->addElement('text', 'name', get_string('custominstancename', 'enrol'));
+        $mform->addHelpButton('name', 'custominstancename', 'enrol_ilios');
         $mform->setType('name', PARAM_TEXT);
 
         $options = [ENROL_INSTANCE_ENABLED  => get_string('yes'),
