@@ -71,13 +71,14 @@ class enrol_ilios_edit_form extends moodleform {
         $enrol = $plugin;
 
         $mform->addElement('header', 'general', get_string('pluginname', 'enrol_ilios'));
-
         $mform->addElement('text', 'name', get_string('custominstancename', 'enrol'));
+        $mform->addHelpButton('name', 'custominstancename', 'enrol_ilios');
         $mform->setType('name', PARAM_TEXT);
 
         $options = [ENROL_INSTANCE_ENABLED  => get_string('yes'),
                          ENROL_INSTANCE_DISABLED => get_string('no')];
         $mform->addElement('select', 'status', get_string('status', 'enrol_ilios'), $options);
+        $mform->addHelpButton('status', 'status', 'enrol_ilios');
 
         $usertypes = [
             get_string('learner', 'enrol_ilios'),
@@ -168,63 +169,57 @@ class enrol_ilios_edit_form extends moodleform {
             }
         }
 
+        $mform->addElement('select', 'selectusertype', get_string('selectusertype', 'enrol_ilios'), $usertypes);
+        $mform->addHelpButton('selectusertype', 'selectusertype', 'enrol_ilios');
         if ($instance->id) {
-            $mform->addElement('select', 'selectusertype', get_string('selectusertype', 'enrol_ilios'), $usertypes);
             $mform->setConstant('selectusertype', $instance->customint2);
             $mform->hardFreeze('selectusertype', $instance->customint2);
-        } else {
-            $mform->addElement('select', 'selectusertype', get_string('selectusertype', 'enrol_ilios'), $usertypes);
-            $mform->addHelpButton('selectusertype', 'selectusertype', 'enrol_ilios');
         }
 
+        $mform->addElement('select', 'selectschool', get_string('school', 'enrol_ilios'), $schooloptions);
+        $mform->addHelpButton('selectschool', 'school', 'enrol_ilios');
         if ($instance->id) {
-            $mform->addElement('select', 'selectschool', get_string('school', 'enrol_ilios'), $schooloptions);
             $mform->setConstant('selectschool', $instance->selectschoolindex);
             $mform->hardFreeze('selectschool');
         } else {
-            $mform->addElement('select', 'selectschool', get_string('school', 'enrol_ilios'), $schooloptions);
             $mform->addRule('selectschool', get_string('required'), 'required', null, 'client');
-            $mform->addHelpButton('selectschool', 'school', 'enrol_ilios');
             $mform->registerNoSubmitButton('updateschooloptions');
             $mform->addElement('submit', 'updateschooloptions', get_string('schooloptionsupdate', 'enrol_ilios'));
         }
 
+        $mform->addElement('select', 'selectprogram', get_string('program', 'enrol_ilios'), $programoptions);
+        $mform->addHelpButton('selectprogram', 'program', 'enrol_ilios');
         if ($instance->id) {
-            $mform->addElement('select', 'selectprogram', get_string('program', 'enrol_ilios'), $programoptions);
             $mform->setConstant('selectprogram', $instance->selectprogramindex);
             $mform->hardFreeze('selectprogram');
 
         } else {
-            $mform->addElement('select', 'selectprogram', get_string('program', 'enrol_ilios'), $programoptions);
             $mform->addRule('selectprogram', get_string('required'), 'required', null, 'client');
-            $mform->addHelpButton('selectprogram', 'program', 'enrol_ilios');
             $mform->disabledIf('selectprogram', 'selectschool', 'eq', '');
             $mform->registerNoSubmitButton('updateprogramoptions');
             $mform->addElement('submit', 'updateprogramoptions', get_string('programoptionsupdate', 'enrol_ilios'));
         }
 
+        $mform->addElement('select', 'selectcohort', get_string('cohort', 'enrol_ilios'), $cohortoptions);
+        $mform->addHelpButton('selectcohort', 'cohort', 'enrol_ilios');
         if ($instance->id) {
-            $mform->addElement('select', 'selectcohort', get_string('cohort', 'enrol_ilios'), $cohortoptions);
             $mform->setConstant('selectcohort', $instance->selectcohortindex);
             $mform->hardFreeze('selectcohort');
 
         } else {
-            $mform->addElement('select', 'selectcohort', get_string('cohort', 'enrol_ilios'), $cohortoptions);
             $mform->addRule('selectcohort', get_string('required'), 'required', null, 'client');
-            $mform->addHelpButton('selectcohort', 'cohort', 'enrol_ilios');
             $mform->disabledIf('selectcohort', 'selectprogram', 'eq', '');
             $mform->registerNoSubmitButton('updatecohortoptions');
             $mform->addElement('submit', 'updatecohortoptions', get_string('cohortoptionsupdate', 'enrol_ilios'));
         }
 
+        $mform->addElement('select', 'selectlearnergroup', get_string('learnergroup', 'enrol_ilios'), $learnergroupoptions);
+        $mform->addHelpButton('selectlearnergroup', 'learnergroup', 'enrol_ilios');
         if ($instance->id) {
-            $mform->addElement('select', 'selectlearnergroup', get_string('learnergroup', 'enrol_ilios'), $learnergroupoptions);
             $mform->setConstant('selectlearnergroup', $instance->selectlearnergroupindex);
             $mform->hardFreeze('selectlearnergroup');
 
         } else {
-            $mform->addElement('select', 'selectlearnergroup', get_string('learnergroup', 'enrol_ilios'), $learnergroupoptions);
-            $mform->addHelpButton('selectlearnergroup', 'learnergroup', 'enrol_ilios');
             $mform->disabledIf('selectlearnergroup', 'selectcohort', 'eq', '');
             $mform->registerNoSubmitButton('updatelearnergroupoptions');
             $mform->addElement('submit', 'updatelearnergroupoptions', get_string('learnergroupoptionsupdate', 'enrol_ilios'));
@@ -238,14 +233,12 @@ class enrol_ilios_edit_form extends moodleform {
             );
         }
 
+        $mform->addElement('select', 'selectsubgroup', get_string('subgroup', 'enrol_ilios'), $subgroupoptions);
+        $mform->addHelpButton('selectsubgroup', 'subgroup', 'enrol_ilios');
         if ($instance->id) {
-            $mform->addElement('select', 'selectsubgroup', get_string('subgroup', 'enrol_ilios'), $subgroupoptions);
             $mform->setConstant('selectsubgroup', $instance->selectsubgroupindex);
             $mform->hardFreeze('selectsubgroup');
-
         } else {
-            $mform->addElement('select', 'selectsubgroup', get_string('subgroup', 'enrol_ilios'), $subgroupoptions);
-            $mform->addHelpButton('selectsubgroup', 'subgroup', 'enrol_ilios');
             $mform->disabledIf('selectsubgroup', 'selectlearnergroup', 'eq', '');
             $mform->registerNoSubmitButton('updatesubgroupoptions');
             $mform->addElement('submit', 'updatesubgroupoptions', 'Update subgroup option');
@@ -269,6 +262,7 @@ class enrol_ilios_edit_form extends moodleform {
         }
 
         $mform->addElement('select', 'roleid', get_string('assignrole', 'enrol_ilios'), $roles);
+        $mform->addHelpButton('roleid', 'assignrole', 'enrol_ilios');
         $mform->setDefault('roleid', $enrol->get_config('roleid'));
 
         $groups = [0 => get_string('none')];
@@ -277,6 +271,7 @@ class enrol_ilios_edit_form extends moodleform {
         }
 
         $mform->addElement('select', 'customint6', get_string('addgroup', 'enrol_ilios'), $groups);
+        $mform->addHelpButton('customint6', 'addgroup', 'enrol_ilios');
 
         $mform->addElement('hidden', 'courseid', null);
         $mform->setType('courseid', PARAM_INT);

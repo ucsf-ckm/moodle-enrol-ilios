@@ -24,13 +24,17 @@
  */
 
 $string['addgroup'] = 'Add to group';
+$string['addgroup_help'] = 'If selected, then users are added to the specified user-group as part of their enrollment into this course.';
 $string['ajaxmore'] = 'More...';
 $string['apikey'] = 'Ilios API key';
 $string['apikey_desc'] = 'Enter the API key obtained from your Ilios server.';
 $string['assignrole'] = 'Assign role';
+$string['assignrole_help'] = 'If selected, then users are enrolled with the specified user-role into this course.';
 $string['cohort'] = 'Program year/Cohort (groups) (learners)';
 $string['cohort_help'] = 'This corresponds to the Cohorts in Ilios.';
 $string['cohortoptionsupdate'] = 'Update cohort options';
+$string['custominstancename'] = 'Custom instance name';
+$string['custominstancename_help'] = 'The name of this enrollment instance. If left empty, then Moodle will auto-generate a name based on user selections made below.';
 $string['defaultinstructorrole'] = 'Default instructor role';
 $string['defaultlearnerrole'] = 'Default learner role';
 $string['enrol'] = 'Enroll Ilios users';
@@ -74,5 +78,6 @@ $string['schooloptionsupdate'] = 'Update school options';
 $string['selectusertype'] = 'User type';
 $string['selectusertype_help'] = 'Select an Ilios user type to sync. Note that only the number of Ilios Learners is noted in the menus below.';
 $string['status'] = 'Active';
+$string['status_help'] = 'If set to "Yes", then this enrollment sync instance is active. To deactivate this sync, set this to "No".';
 $string['subgroup'] = 'Sub-group (sub-groups) (learners)';
 $string['subgroup_help'] = 'This corresponds to the Sub-groups in Ilios.';
