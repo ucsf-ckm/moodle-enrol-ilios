@@ -273,7 +273,21 @@ class enrol_ilios_plugin extends enrol_plugin {
                 );
                 $users = $ilios->get_users(['id' => $entity->users]);
             }
+
             $trace->output(count($users) . " Ilios users found.");
+
+            // Filter out records that do not have a campus ID.
+            $users = array_values(array_filter($users, function ($user) use ($trace) {
+                $campusid = $user->campusId ?? '';
+                if ('' === trim($campusid)) {
+                    $trace->output("skipping: Ilios user " . $user->id . " does not have a 'campusId' field.", 1);
+                    return false;
+                }
+                return true;
+            }));
+
+            // Deduplicate Ilios user records.
+            $users = $this->deduplicate_ilios_users($users, $trace);
 
             foreach ($users as $user) {
                 // Fetch user info if not cached in $iliosusers.
@@ -288,20 +302,11 @@ class enrol_ilios_plugin extends enrol_plugin {
                 }
 
                 if ($iliosusers[$user->id] === null) {
-                    if (!empty($user->campusId)) {
-                        $trace->output(
-                            "skipping: Cannot find campusId "
-                            . $user->campusId
-                            . " that matches Moodle user field 'idnumber'."
-                            , 1);
-                    } else {
-                        $trace->output(
-                            "skipping: Ilios user "
-                            . $user->id
-                            . " does not have a 'campusId' field."
-                            , 1
-                        );
-                    }
+                    $trace->output(
+                        "skipping: Cannot find campusId "
+                        . $user->campusId
+                        . " that matches Moodle user field 'idnumber'."
+                        , 1);
                 } else {
                     $enrolleduserids[] = $userid = $iliosusers[$user->id]['id'];
 
@@ -678,6 +683,38 @@ class enrol_ilios_plugin extends enrol_plugin {
         if (!$DB->record_exists('user_enrolments', ['enrolid' => $instance->id, 'userid' => $userid])) {
             $this->enrol_user($instance, $userid, null, $data->timestart, $data->timeend, ENROL_USER_SUSPENDED);
         }
+    }
+
+    /**
+     * Ensures uniqueness of user accounts by campus ID.
+     * If there are duplicate user records, they are resolved in the following manner.
+     * 1. If all duplicates are active user records, then use the most recently created one.
+     * 2. If all duplicates are inactive user records, then use the most recently created one.
+     * 3. If there is a mix between active and inactive user records, then use the most recently created active one.
+     * @param array $users An array of Ilios user records.
+     * @return array The given array of Ilios user records, with duplicates removed.
+     */
+    protected function deduplicate_ilios_users(array $users): array {
+        // Reverse-sort users by their user ID. In other words, from most-recently created to oldest.
+        array_multisort(array_column($users, 'id'), SORT_DESC, SORT_NUMERIC, $users);
+        $cache = [];
+        foreach ($users as $user) {
+            $key = $user->campusId;
+            // If this is the first time we encounter this user, cache them and move on.
+            if (!array_key_exists($key, $cache)) {
+                $cache[$key] = $user;
+                continue;
+            }
+
+            // And now we're dealing with duplicates.
+            // If the current user record is active, and the cached duplicate is inactive,
+            // then replace the cached, inactive user record with the current, active one.
+            if (!$cache[$key]->enabled && $user->enabled) {
+                $cache[$key] = $user;
+            }
+        }
+
+        return array_values($cache);
     }
 }
 
